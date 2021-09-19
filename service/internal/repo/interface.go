@@ -1,9 +1,11 @@
 package repo
 
+import "service/internal/models"
+
 type IUsecase interface {
-	CreatePerson() error
-	DropPerson() error
-	UpdatePerson() error
-	GetPersonsList() error
-	GetPerson() error
+	CreatePerson(person models.Person) error
+	DropPerson(person models.Person) error
+	UpdatePerson(person models.Person) error
+	GetPersonsList(person models.Person) error
+	GetPerson(person models.Person) error
 }
