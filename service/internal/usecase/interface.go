@@ -3,9 +3,9 @@ package usecase
 import "service/internal/models"
 
 type IUsecase interface {
-	CreatePerson(person models.Person) error
-	RemovePerson(person models.Person) error
-	UpdatePerson(person models.Person) error
-	GetPerson(person models.Person) error
-	GetPersonsList() ([]models.Person, error)
+	CreatePerson(person models.Person) models.StatusCode
+	RemovePerson(person models.Person) models.StatusCode
+	UpdatePerson(person models.Person) models.StatusCode
+	GetPerson(person models.Person) models.StatusCode
+	GetPersonsList() ([]models.Person, models.StatusCode)
 }
