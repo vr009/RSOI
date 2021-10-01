@@ -10,4 +10,5 @@ const (
 	Conflict
 	BadRequest
 	Created
+	NoContent
 )

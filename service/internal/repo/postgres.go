@@ -40,7 +40,6 @@ func (pr *PersonRepo) DeletePerson(person models.Person) models.StatusCode {
 	return models.Okay
 }
 
-// TWO ERRORS RETURNING
 func (pr *PersonRepo) UpdatePerson(person models.Person) models.StatusCode {
 	_, status := pr.GetPerson(person)
 	if status != models.Okay {

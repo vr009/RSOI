@@ -40,6 +40,14 @@ func (ph *PersonHandler) AddPerson(w http.ResponseWriter, r *http.Request) {
 		Response(w, models.InternalError, "", nil)
 		return
 	}
+
+	validationErr := PersonIsValid(person)
+	if validationErr != nil {
+		errBody, _ := json.Marshal(models.ValidationErrorResponse{Message: "Data is not valid", Errors: validationErr})
+		Response(w, models.BadRequest, "Invalid data", errBody)
+		return
+	}
+
 	NewPerson, status := ph.usecase.CreatePerson(person)
 	if status != models.Okay {
 		Response(w, models.BadRequest, "Invalid data", nil)
@@ -68,14 +76,16 @@ func (ph *PersonHandler) GetPerson(w http.ResponseWriter, r *http.Request) {
 			Response(w, models.InternalError, "", nil)
 			return
 		}
-		w.WriteHeader(http.StatusOK)
-		w.Write(body)
+		Response(w, models.Okay, "Person for ID", body)
 		return
 	}
 
-	w.WriteHeader(http.StatusNotFound)
 	body, err := json.Marshal(models.ErrorResponse{Message: "Not found person for id"})
-	w.Write(body)
+	if err != nil {
+		Response(w, models.InternalError, "", nil)
+		return
+	}
+	Response(w, models.NotFound, "Not found Person for ID", body)
 }
 
 func (ph *PersonHandler) RemovePerson(w http.ResponseWriter, r *http.Request) {
@@ -87,17 +97,16 @@ func (ph *PersonHandler) RemovePerson(w http.ResponseWriter, r *http.Request) {
 	)
 	person.ID, err = strconv.Atoi(vars["id"])
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		Response(w, models.BadRequest, "", nil)
 		return
 	}
 
 	status = ph.usecase.RemovePerson(person)
 	if status != models.Okay {
-		w.WriteHeader(http.StatusInternalServerError)
+		Response(w, models.InternalError, "", nil)
 		return
 	}
-	w.WriteHeader(http.StatusNoContent)
-	w.Header().Set("Description", "Person for ID was removed")
+	Response(w, models.NoContent, "Person for ID was removed", nil)
 }
 
 func (ph *PersonHandler) UpdatePerson(w http.ResponseWriter, r *http.Request) {
@@ -107,18 +116,27 @@ func (ph *PersonHandler) UpdatePerson(w http.ResponseWriter, r *http.Request) {
 		err    error
 		status models.StatusCode
 	)
+
 	err = json.NewDecoder(r.Body).Decode(&person)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
+		Response(w, models.InternalError, "", nil)
 		return
 	}
+
 	person.ID, err = strconv.Atoi(vars["id"])
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		Response(w, models.BadRequest, "", nil)
 		return
 	}
-	status = ph.usecase.UpdatePerson(person)
 
+	validationErr := PersonIsValid(person)
+	if validationErr != nil {
+		errBody, _ := json.Marshal(models.ValidationErrorResponse{Message: "Data is not valid", Errors: validationErr})
+		Response(w, models.BadRequest, "Invalid data", errBody)
+		return
+	}
+
+	status = ph.usecase.UpdatePerson(person)
 	switch status {
 	case models.Okay:
 		body, _ := json.Marshal(person)
