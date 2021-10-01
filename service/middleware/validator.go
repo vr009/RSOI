@@ -1,6 +1,8 @@
 package middleware
 
-import "service/internal/models"
+import (
+	"service/models"
+)
 
 func PersonIsValid(person models.Person) bool {
 	return true

@@ -8,4 +8,6 @@ const (
 	InternalError
 	AlreadyExists
 	Conflict
+	BadRequest
+	Created
 )

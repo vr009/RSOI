@@ -7,11 +7,11 @@ import (
 )
 
 const (
-	INSERTQUERY = "INSERT INTO public.persons(name, age, work, address) VALUES($1, $2, $3, $4) RETURNING person_id;"
-	DELETEQUERY = "DELETE FROM WHERE"
-	UPDATEQUERY = "UPDATE SET WHERE"
-	GETQUERY    = "SELECT FROM WHERE"
-	LISTQUERY   = "SELECT FROM"
+	INSERTQUERY = "INSERT INTO persons.persons(name, age, work, address) VALUES($1, $2, $3, $4) RETURNING person_id;"
+	DELETEQUERY = "DELETE FROM WHERE person_id=$1;"
+	UPDATEQUERY = "UPDATE SET WHERE person_id=$1;"
+	GETQUERY    = "SELECT FROM WHERE person_id=$1;"
+	LISTQUERY   = "SELECT * FROM public.persons;"
 )
 
 type PersonRepo struct {
@@ -22,12 +22,12 @@ func NewPersonRepo() *PersonRepo {
 	return &PersonRepo{}
 }
 
-func (pr *PersonRepo) CreatePerson(person models.PersonRequest) (models.Person, models.StatusCode) {
+func (pr *PersonRepo) CreatePerson(person models.Person) (models.Person, models.StatusCode) {
 	NewPerson := models.Person{Name: person.Name, Address: person.Address, Work: person.Work, Age: person.Age}
 	row := pr.conn.QueryRow(context.Background(), INSERTQUERY)
 	err := row.Scan(&NewPerson.ID)
 	if err != nil {
-		return models.Person{}, models.InternalError
+		return models.Person{}, models.BadRequest
 	}
 	return NewPerson, models.Okay
 }
@@ -40,10 +40,16 @@ func (pr *PersonRepo) DeletePerson(person models.Person) models.StatusCode {
 	return models.Okay
 }
 
+// TWO ERRORS RETURNING
 func (pr *PersonRepo) UpdatePerson(person models.Person) models.StatusCode {
+	_, status := pr.GetPerson(person)
+	if status != models.Okay {
+		return models.NotFound
+	}
+
 	_, err := pr.conn.Exec(context.Background(), UPDATEQUERY, person.ID)
 	if err != nil {
-		return models.InternalError
+		return models.BadRequest
 	}
 	return models.Okay
 }
@@ -51,7 +57,7 @@ func (pr *PersonRepo) GetPerson(person models.Person) (models.Person, models.Sta
 	rows := pr.conn.QueryRow(context.Background(), GETQUERY, person.ID)
 	err := rows.Scan(&person)
 	if err != nil {
-		return models.Person{}, models.InternalError
+		return models.Person{}, models.NotFound
 	}
 	return models.Person{}, models.Okay
 }
