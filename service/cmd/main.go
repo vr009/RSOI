@@ -1,16 +1,28 @@
 package main
 
 import (
+	"context"
 	"github.com/gorilla/mux"
+	"github.com/jackc/pgx/v4/pgxpool"
 	"log"
 	"net/http"
+	"service/config"
 	"service/internal/delivery"
 	"service/internal/repo"
 	usecase2 "service/internal/usecase"
 )
 
 func main() {
-	repom := repo.NewPersonRepo()
+	connString, err := config.GetConnectionString()
+	if err != nil {
+		panic(err.Error())
+	}
+	conn, err := pgxpool.Connect(context.Background(), connString)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	repom := repo.NewPersonRepo(conn)
 	usecase := usecase2.NewPersonUsecase(repom)
 	handler := delivery.NewPersonHandler(usecase)
 

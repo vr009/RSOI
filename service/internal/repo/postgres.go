@@ -18,8 +18,10 @@ type PersonRepo struct {
 	conn *pgxpool.Pool
 }
 
-func NewPersonRepo() *PersonRepo {
-	return &PersonRepo{}
+func NewPersonRepo(conn *pgxpool.Pool) *PersonRepo {
+	return &PersonRepo{
+		conn: conn,
+	}
 }
 
 func (pr *PersonRepo) CreatePerson(person models.Person) (models.Person, models.StatusCode) {
