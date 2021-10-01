@@ -1,11 +1,13 @@
 package usecase
 
-import "service/internal/models"
+import (
+	models2 "service/models"
+)
 
 type IUsecase interface {
-	CreatePerson(person models.Person) models.StatusCode
-	RemovePerson(person models.Person) models.StatusCode
-	UpdatePerson(person models.Person) models.StatusCode
-	GetPerson(person models.Person) models.StatusCode
-	GetPersonsList() ([]models.Person, models.StatusCode)
+	GetPersonsList() ([]models2.Person, models2.StatusCode)
+	CreatePerson(person models2.PersonRequest) (models2.Person, models2.StatusCode)
+	RemovePerson(person models2.Person) models2.StatusCode
+	UpdatePerson(person models2.Person) models2.StatusCode
+	GetPerson(person models2.Person) (models2.Person, models2.StatusCode)
 }

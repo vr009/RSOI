@@ -1,30 +1,31 @@
 package usecase
 
 import (
-	"service/internal/models"
 	"service/internal/repo"
+	"service/models"
 )
 
 type PersonUsecase struct {
-	repo *repo.PersonRepo
+	repo repo.IRepo
 }
 
-func NewPersonUsecase(repo *repo.PersonRepo) *PersonUsecase {
+func NewPersonUsecase(repo repo.IRepo) *PersonUsecase {
 	return &PersonUsecase{repo: repo}
 }
 
-func CreatePerson(person models.Person) error {
-	return nil
+func (pu *PersonUsecase) GetPersonsList() ([]models.Person, models.StatusCode) {
+	return pu.repo.GetPersonsList()
 }
-func RemovePerson(person models.Person) error {
-	return nil
+
+func (pu *PersonUsecase) CreatePerson(person models.PersonRequest) (models.Person, models.StatusCode) {
+	return pu.repo.CreatePerson(person)
 }
-func UpdatePerson(person models.Person) error {
-	return nil
+func (pu *PersonUsecase) RemovePerson(person models.Person) models.StatusCode {
+	return pu.repo.DropPerson(person)
 }
-func GetPerson(person models.Person) error {
-	return nil
+func (pu *PersonUsecase) UpdatePerson(person models.Person) models.StatusCode {
+	return pu.repo.UpdatePerson(person)
 }
-func GetPersonsList() ([]models.Person, error) {
-	return nil, nil
+func (pu *PersonUsecase) GetPerson(person models.Person) (models.Person, models.StatusCode) {
+	return pu.repo.GetPerson(person)
 }

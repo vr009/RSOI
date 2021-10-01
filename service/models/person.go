@@ -7,3 +7,10 @@ type Person struct {
 	Work    string `json:"work"`
 	Address string `json:"address"`
 }
+
+type PersonRequest struct {
+	Name    string `json:"name"`
+	Age     int    `json:"age"`
+	Address string `json:"address"`
+	Work    string `json:"work"`
+}

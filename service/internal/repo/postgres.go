@@ -1,30 +1,35 @@
 package repo
 
 import (
-	"service/internal/models"
-	"service/internal/usecase"
+	"service/models"
+)
+
+const (
+	ADDQUERY    = ""
+	DELETEQUERY = ""
+	UPDATEQUERY = ""
+	GETQUERY    = ""
 )
 
 type PersonRepo struct {
-	uc *usecase.IUsecase
 }
 
-func NewPersonRepo(uc *usecase.IUsecase) *PersonRepo {
-	return &PersonRepo{uc: uc}
+func NewPersonRepo() *PersonRepo {
+	return &PersonRepo{}
 }
 
-func CreatePerson(person models.Person) error {
-	return nil
+func (pr *PersonRepo) CreatePerson(person models.PersonRequest) (models.Person, models.StatusCode) {
+	return models.Person{}, models.Okay
 }
-func RemovePerson(person models.Person) error {
-	return nil
+func (pr *PersonRepo) DeletePerson(person models.Person) models.StatusCode {
+	return models.Okay
 }
-func UpdatePerson(person models.Person) error {
-	return nil
+func (pr *PersonRepo) UpdatePerson(person models.Person) models.StatusCode {
+	return models.Okay
 }
-func GetPerson(person models.Person) error {
-	return nil
+func (pr *PersonRepo) GetPerson(person models.Person) (models.Person, models.StatusCode) {
+	return models.Person{}, models.Okay
 }
-func GetPersonsList() ([]models.Person, error) {
-	return nil, nil
+func (pr *PersonRepo) GetPersonsList() ([]models.Person, models.StatusCode) {
+	return nil, models.Okay
 }
