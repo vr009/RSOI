@@ -32,7 +32,7 @@ func (pr *PersonRepo) CreatePerson(person models.Person) (models.Person, models.
 	if err != nil {
 		return models.Person{}, models.BadRequest
 	}
-	return NewPerson, models.Okay
+	return NewPerson, models.Created
 }
 
 func (pr *PersonRepo) DeletePerson(person models.Person) models.StatusCode {

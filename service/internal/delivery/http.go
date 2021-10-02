@@ -49,7 +49,7 @@ func (ph *PersonHandler) AddPerson(w http.ResponseWriter, r *http.Request) {
 	}
 
 	NewPerson, status := ph.usecase.CreatePerson(person)
-	if status != models.Okay {
+	if status != models.Created {
 		Response(w, models.BadRequest, "Invalid data", nil)
 		return
 	}
