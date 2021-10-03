@@ -23,9 +23,9 @@ jobs:
 
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_api_key: 3e7f5329-caad-4261-8deb-e0d7125c8fbe
           heroku_app_name: "testforrsoi"
-          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          heroku_email: slavarianov@yandex.ru
           usedocker: true
 
       - name: Run API Tests
