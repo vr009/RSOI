@@ -106,8 +106,7 @@ func (ph *PersonHandler) RemovePerson(w http.ResponseWriter, r *http.Request) {
 		Response(w, models.InternalError, "", nil)
 		return
 	}
-	w.WriteHeader(http.StatusNoContent)
-	w.Header().Set("Description", "Person for ID was removed")
+	Response(w, models.NoContent, "Person for ID was removed", nil)
 	return
 }
 

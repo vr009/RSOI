@@ -6,6 +6,8 @@ import (
 )
 
 func Response(w http.ResponseWriter, code models.StatusCode, description string, body []byte) {
+	w.Header().Set("Content-Type", "application/json")
+	//w.Header().Set("Content-Length", fmt.Sprintf("%d", len(body)))
 	switch code {
 	case models.Okay:
 		w.WriteHeader(http.StatusOK)
@@ -32,6 +34,7 @@ func Response(w http.ResponseWriter, code models.StatusCode, description string,
 		w.Header().Set("Description", description)
 		return
 	}
+
 	if body != nil {
 		w.Write(body)
 		return

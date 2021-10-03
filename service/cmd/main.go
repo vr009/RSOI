@@ -19,7 +19,7 @@ func main() {
 	port, ok := os.LookupEnv("PORT")
 
 	if !ok {
-		port = "5000"
+		port = "8080"
 	}
 
 	connString, err := config.GetConnectionString()
