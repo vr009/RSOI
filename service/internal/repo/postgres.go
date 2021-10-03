@@ -8,11 +8,11 @@ import (
 )
 
 const (
-	INSERTQUERY = "INSERT INTO persons.persons(name, age, work, address) VALUES($1, $2, $3, $4) RETURNING person_id;"
-	DELETEQUERY = "DELETE FROM persons.persons WHERE person_id=$1;"
-	UPDATEQUERY = "UPDATE persons.persons SET name=$1, age=$2, work=$3, address=$4 WHERE person_id=$5;"
-	GETQUERY    = "SELECT name, age, work, address FROM persons.persons WHERE person_id=$1;"
-	LISTQUERY   = "SELECT * FROM persons.persons;"
+	INSERTQUERY = "INSERT INTO public.persons(name, age, work, address) VALUES($1, $2, $3, $4) RETURNING person_id;"
+	DELETEQUERY = "DELETE FROM public.persons WHERE person_id=$1;"
+	UPDATEQUERY = "UPDATE public.persons SET name=$1, age=$2, work=$3, address=$4 WHERE person_id=$5;"
+	GETQUERY    = "SELECT name, age, work, address FROM public.persons WHERE person_id=$1;"
+	LISTQUERY   = "SELECT * FROM public.persons;"
 )
 
 type PersonRepo struct {

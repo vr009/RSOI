@@ -8,7 +8,7 @@ WORKDIR /opt/app
 
 COPY ./service .
 
-EXPOSE 8080
+EXPOSE 5000
 
 RUN ls
 
