@@ -8,6 +8,8 @@ WORKDIR /opt/app
 
 COPY ./service .
 
+EXPOSE 8080
+
 RUN ls
 
 RUN go build ./cmd/main.go
