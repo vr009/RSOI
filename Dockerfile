@@ -6,6 +6,6 @@ ENV DATABASE_URL "postgres://jowzwttszfthin:9937fa7e54c3af76b0cd93478ff24ca6aaee
 
 WORKDIR /opt/app
 
-COPY . .
+COPY ./service .
 
 RUN go build ./service/cmd/main.go
