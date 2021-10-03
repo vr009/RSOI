@@ -8,4 +8,6 @@ WORKDIR /opt/app
 
 COPY ./service .
 
-RUN go build ./service/cmd/main.go
+RUN go mod tidy
+
+RUN go build ./cmd/main.go
