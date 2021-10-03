@@ -24,8 +24,8 @@ func main() {
 
 	connString, err := config.GetConnectionString()
 	if err != nil {
-		panic(err.Error())
 	}
+	connString = "postgres://jowzwttszfthin:9937fa7e54c3af76b0cd93478ff24ca6aaeea3eb1bc1afafdfced4823d9bc343@ec2-34-255-134-200.eu-west-1.compute.amazonaws.com:5432/d52cq9d3566196"
 	conn, err := pgxpool.Connect(context.Background(), connString)
 	if err != nil {
 		panic(err.Error())
