@@ -2,10 +2,12 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"log"
 	"net/http"
+	"os"
 	"service/config"
 	"service/internal/delivery"
 	"service/internal/repo"
@@ -14,6 +16,12 @@ import (
 )
 
 func main() {
+	port, ok := os.LookupEnv("PORT")
+
+	if !ok {
+		port = "8080"
+	}
+
 	connString, err := config.GetConnectionString()
 	if err != nil {
 		panic(err.Error())
@@ -38,6 +46,6 @@ func main() {
 		api.HandleFunc("/persons/{id:[0-9]+}", handler.RemovePerson).Methods(http.MethodDelete)
 	}
 
-	srv := &http.Server{Handler: r, Addr: ":8080"}
+	srv := &http.Server{Handler: r, Addr: fmt.Sprintf(":%s", port)}
 	log.Fatal(srv.ListenAndServe())
 }
