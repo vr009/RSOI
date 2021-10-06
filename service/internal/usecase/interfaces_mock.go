@@ -94,7 +94,7 @@ func (mr *MockIUsecaseMockRecorder) RemovePerson(person interface{}) *gomock.Cal
 }
 
 // UpdatePerson mocks base method.
-func (m *MockIUsecase) UpdatePerson(person models.Person) models.StatusCode {
+func (m *MockIUsecase) UpdatePerson(person *models.Person) models.StatusCode {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdatePerson", person)
 	ret0, _ := ret[0].(models.StatusCode)

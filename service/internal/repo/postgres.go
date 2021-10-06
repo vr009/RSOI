@@ -43,16 +43,30 @@ func (pr *PersonRepo) DeletePerson(person models.Person) models.StatusCode {
 	return models.Okay
 }
 
-func (pr *PersonRepo) UpdatePerson(person models.Person) models.StatusCode {
-	_, status := pr.GetPerson(person)
+func (pr *PersonRepo) UpdatePerson(personNew *models.Person) models.StatusCode {
+	personOld, status := pr.GetPerson(*personNew)
 	if status != models.Okay {
 		return models.NotFound
 	}
 
-	_, err := pr.conn.Exec(context.Background(), UPDATEQUERY, person.Name, person.Age, person.Work, person.Address, person.ID)
+	if personOld.Age != personNew.Age && personNew.Age != 0 {
+		personOld.Age = personNew.Age
+	}
+	if personOld.Work != personNew.Work && personNew.Work != "" {
+		personOld.Work = personNew.Work
+	}
+	if personOld.Name != personNew.Name && personNew.Name != "" {
+		personOld.Name = personNew.Name
+	}
+	if personOld.Address != personNew.Address && personNew.Address != "" {
+		personOld.Address = personNew.Address
+	}
+
+	_, err := pr.conn.Exec(context.Background(), UPDATEQUERY, personOld.Name, personOld.Age, personOld.Work, personOld.Address, personOld.ID)
 	if err != nil {
 		return models.BadRequest
 	}
+	*personNew = personOld
 	return models.Okay
 }
 func (pr *PersonRepo) GetPerson(person models.Person) (models.Person, models.StatusCode) {

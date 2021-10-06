@@ -53,8 +53,8 @@ func (ph *PersonHandler) AddPerson(w http.ResponseWriter, r *http.Request) {
 		Response(w, models.BadRequest, "Invalid data", nil)
 		return
 	}
-	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Location", "/api/v1/persons/"+strconv.Itoa(NewPerson.ID))
+	w.WriteHeader(http.StatusCreated)
 }
 
 func (ph *PersonHandler) GetPerson(w http.ResponseWriter, r *http.Request) {
@@ -137,7 +137,7 @@ func (ph *PersonHandler) UpdatePerson(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	status = ph.usecase.UpdatePerson(person)
+	status = ph.usecase.UpdatePerson(&person)
 	switch status {
 	case models.Okay:
 		body, _ := json.Marshal(person)

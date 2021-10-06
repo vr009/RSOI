@@ -94,7 +94,7 @@ func (mr *MockIRepoMockRecorder) GetPersonsList() *gomock.Call {
 }
 
 // UpdatePerson mocks base method.
-func (m *MockIRepo) UpdatePerson(person models.Person) models.StatusCode {
+func (m *MockIRepo) UpdatePerson(person *models.Person) models.StatusCode {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdatePerson", person)
 	ret0, _ := ret[0].(models.StatusCode)

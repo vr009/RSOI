@@ -23,7 +23,7 @@ func (pu *PersonUsecase) CreatePerson(person models.Person) (models.Person, mode
 func (pu *PersonUsecase) RemovePerson(person models.Person) models.StatusCode {
 	return pu.repo.DeletePerson(person)
 }
-func (pu *PersonUsecase) UpdatePerson(person models.Person) models.StatusCode {
+func (pu *PersonUsecase) UpdatePerson(person *models.Person) models.StatusCode {
 	return pu.repo.UpdatePerson(person)
 }
 func (pu *PersonUsecase) GetPerson(person models.Person) (models.Person, models.StatusCode) {
