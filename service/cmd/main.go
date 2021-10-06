@@ -12,7 +12,6 @@ import (
 	"service/internal/delivery"
 	"service/internal/repo"
 	usecase2 "service/internal/usecase"
-	"service/middleware"
 )
 
 func main() {
@@ -36,7 +35,7 @@ func main() {
 	handler := delivery.NewPersonHandler(usecase)
 
 	r := mux.NewRouter()
-	r.Use(middleware.CORSMiddleware)
+	//r.Use(middleware.CORSMiddleware)
 	api := r.PathPrefix("/api/v1").Subrouter()
 	{
 		api.HandleFunc("/persons", handler.GetPersonsList).Methods(http.MethodGet)
