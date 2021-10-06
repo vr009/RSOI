@@ -46,5 +46,6 @@ func main() {
 	}
 	http.Handle("/", r)
 	srv := &http.Server{Handler: r, Addr: fmt.Sprintf(":%s", port)}
+	log.Print("Server running at ", srv.Addr)
 	log.Fatal(srv.ListenAndServe())
 }
