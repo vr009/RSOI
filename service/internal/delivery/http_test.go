@@ -302,7 +302,7 @@ func TestPersonHandler_UpdatePerson(t *testing.T) {
 	}
 
 	for i := 0; i < len(tests); i++ {
-		mockUsecase.EXPECT().UpdatePerson(tests[i].person).Return(tests[i].args.statusReturn)
+		mockUsecase.EXPECT().UpdatePerson(&tests[i].person).Return(tests[i].args.statusReturn)
 	}
 
 	for _, tt := range tests {
