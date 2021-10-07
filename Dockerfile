@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 5000
 
-RUN go build ./service/cmd/main.go
+RUN go build ./cmd/main.go
