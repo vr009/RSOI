@@ -15,12 +15,13 @@ import (
 )
 
 func main() {
+	log.Print("STARTING")
 	port, ok := os.LookupEnv("PORT")
-
+	log.Print("1")
 	if !ok {
 		port = "5000"
 	}
-
+	log.Print("2")
 	connString, err := config.GetConnectionString()
 	if err != nil {
 		connString = "postgres://jowzwttszfthin:9937fa7e54c3af76b0cd93478ff24ca6aaeea3eb1bc1afafdfced4823d9bc343@ec2-34-255-134-200.eu-west-1.compute.amazonaws.com:5432/d52cq9d3566196"
