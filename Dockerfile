@@ -11,3 +11,5 @@ COPY . .
 EXPOSE 5000
 
 RUN go build ./cmd/main.go
+
+CMD ./main
