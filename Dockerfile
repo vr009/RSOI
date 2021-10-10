@@ -8,7 +8,7 @@ WORKDIR /opt/app
 
 COPY . .
 
-EXPOSE 5000
+EXPOSE 8080
 
 RUN go build ./cmd/main.go
 
