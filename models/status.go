@@ -6,8 +6,6 @@ const (
 	Okay StatusCode = iota
 	NotFound
 	InternalError
-	AlreadyExists
-	Conflict
 	BadRequest
 	Created
 	NoContent
