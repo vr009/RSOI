@@ -35,7 +35,7 @@ func main() {
 	handler := delivery.NewPersonHandler(usecase)
 
 	m := middleware.NewMetricsMiddleware()
-	m.Register("library system" + os.Getenv("VERSION"))
+	m.Register("library_system" + os.Getenv("VER"))
 
 	r := mux.NewRouter()
 	r.Use(middleware.CORSMiddleware)
