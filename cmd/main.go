@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"
 	"net/http"
 	"os"
@@ -24,7 +25,7 @@ func main() {
 	}
 	connString, err := config.GetConnectionString()
 	if err != nil {
-		connString = "user=postgres password=postgres host=localhost port=5432 dbname=postgres"
+		connString = "user=postgres password=postgres host=postgres port=5432 dbname=postgres"
 	}
 	conn, err := pgxpool.Connect(context.Background(), connString)
 	if err != nil {
@@ -49,6 +50,7 @@ func main() {
 	}
 
 	api.Use(m.LogMetrics)
+	api.PathPrefix("/api/metrics").Handler(promhttp.Handler())
 
 	http.Handle("/", r)
 	srv := &http.Server{Handler: r, Addr: fmt.Sprintf(":%s", port)}
