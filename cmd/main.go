@@ -50,7 +50,7 @@ func main() {
 	}
 
 	api.Use(m.LogMetrics)
-	api.PathPrefix("/api/metrics").Handler(promhttp.Handler())
+	api.PathPrefix("/metrics").Handler(promhttp.Handler())
 
 	http.Handle("/", r)
 	srv := &http.Server{Handler: r, Addr: fmt.Sprintf(":%s", port)}
