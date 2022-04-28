@@ -29,7 +29,7 @@ func main() {
 	}
 	conn, err := pgxpool.Connect(context.Background(), connString)
 	if err != nil {
-		print(err.Error())
+		print("errrrr: " + err.Error())
 	}
 	repom := repo.NewPersonRepo(conn)
 	usecase := usecase2.NewPersonUsecase(repom)
@@ -50,7 +50,7 @@ func main() {
 	}
 
 	api.Use(m.LogMetrics)
-	api.PathPrefix("/metrics").Handler(promhttp.Handler())
+	api.PathPrefix("/api/metrics").Handler(promhttp.Handler())
 
 	http.Handle("/", r)
 	srv := &http.Server{Handler: r, Addr: fmt.Sprintf(":%s", port)}
