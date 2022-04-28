@@ -3,16 +3,17 @@ package repo
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"service/models"
 )
 
 const (
-	INSERTQUERY = "INSERT INTO public.persons(name, age, work, address) VALUES($1, $2, $3, $4) RETURNING person_id;"
-	DELETEQUERY = "DELETE FROM public.persons WHERE person_id=$1;"
-	UPDATEQUERY = "UPDATE public.persons SET name=$1, age=$2, work=$3, address=$4 WHERE person_id=$5;"
-	GETQUERY    = "SELECT name, age, work, address FROM public.persons WHERE person_id=$1;"
-	LISTQUERY   = "SELECT * FROM public.persons;"
+	INSERTQUERY = "INSERT INTO persons(name, age, work, address) VALUES($1, $2, $3, $4) RETURNING person_id;"
+	DELETEQUERY = "DELETE FROM persons WHERE person_id=$1;"
+	UPDATEQUERY = "UPDATE persons SET name=$1, age=$2, work=$3, address=$4 WHERE person_id=$5;"
+	GETQUERY    = "SELECT name, age, work, address FROM persons WHERE person_id=$1;"
+	LISTQUERY   = "SELECT * FROM persons;"
 )
 
 type PersonRepo struct {
@@ -30,6 +31,7 @@ func (pr *PersonRepo) CreatePerson(person models.Person) (models.Person, models.
 	row := pr.conn.QueryRow(context.Background(), INSERTQUERY, person.Name, person.Age, person.Work, person.Address)
 	err := row.Scan(&NewPerson.ID)
 	if err != nil {
+		fmt.Println(err)
 		return models.Person{}, models.BadRequest
 	}
 	return NewPerson, models.Created
