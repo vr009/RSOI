@@ -25,8 +25,9 @@ func main() {
 	}
 	connString, err := config.GetConnectionString()
 	if err != nil {
-		connString = "user=postgres password=postgres host=localhost port=5432 dbname=postgres"
+		connString = "user=program password=test host=postgres port=5432 dbname=postgres"
 	}
+	fmt.Println(connString)
 	conn, err := pgxpool.Connect(context.Background(), connString)
 	if err != nil {
 		print("errrrr: " + err.Error())
